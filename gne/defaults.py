@@ -15,6 +15,10 @@ AUTHOR_PATTERN = [
             # '(文/图[：|:| |丨|/]?\s*[\u4E00-\u9FA5a-zA-Z、 ]{2,20})[）】)]]?[^\u4E00-\u9FA5|:|：]',
 ]
 
+AUTHOR_META = [  # 部分特别规范的新闻网站，可以直接从 HTML 的 meta 数据中获得发布时间
+    '//meta[starts-with(@name, "author")]/@content',
+    ]
+
 DATETIME_PATTERN = [
     "(\d{4}[-|/|.]\d{1,2}[-|/|.]\d{1,2}\s*?[0-1]?[0-9]:[0-5]?[0-9]:[0-5]?[0-9])",
     "(\d{4}[-|/|.]\d{1,2}[-|/|.]\d{1,2}\s*?[2][0-3]:[0-5]?[0-9]:[0-5]?[0-9])",
@@ -82,6 +86,7 @@ HIGH_WEIGHT_ARRT_KEYWORD = ['content',
 
 PUBLISH_TIME_META = [  # 部分特别规范的新闻网站，可以直接从 HTML 的 meta 数据中获得发布时间
     '//meta[starts-with(@property, "rnews:datePublished")]/@content',
+    '//meta[starts-with(@property, "article:modified_time")]/@content',
     '//meta[starts-with(@property, "article:published_time")]/@content',
     '//meta[starts-with(@property, "og:published_time")]/@content',
     '//meta[starts-with(@property, "og:release_date")]/@content',
