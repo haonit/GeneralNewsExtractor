@@ -49,10 +49,12 @@ class TitleExtractor:
         h_tag_texts_list = element.xpath('(//h1//text() | //h2//text() | //h3//text() | //h4//text() | //h5//text())')
         title_text = ''.join(element.xpath('//title/text()'))
         news_title = ''
+        max_lcs = ""
         for h_tag_text in h_tag_texts_list:
-            lcs = get_longest_common_sub_string(title_text, h_tag_text)
-            if len(lcs) > len(news_title):
-                news_title = lcs
+            lcs = get_longest_common_sub_string(title_text, h_tag_text.strip())
+            if len(lcs) > len(max_lcs):
+                max_lcs = lcs
+                news_title = h_tag_text.strip()
         return news_title if len(news_title) > 4 else ''
 
     def extract(self, element: HtmlElement, title_xpath: str = '') -> str:

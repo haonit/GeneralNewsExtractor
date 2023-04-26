@@ -155,12 +155,15 @@ def get_longest_common_sub_string(str1: str, str2: str) -> str:
     """
     if not all([str1, str2]):
         return ''
-    matrix = [[0] * (len(str2) + 1) for _ in range(len(str1) + 1)]
+    temp_str1 = ''.join(map(lambda c: c if not unicodedata.category(c).startswith('P') else " "*len(c), str1))
+    temp_str2 = ''.join(map(lambda c: c if not unicodedata.category(c).startswith('P') else " "*len(c), str2))
+
+    matrix = [[0] * (len(temp_str2) + 1) for _ in range(len(temp_str1) + 1)]
     max_length = 0
     start_position = 0
-    for index_of_str1 in range(1, len(str1) + 1):
-        for index_of_str2 in range(1, len(str2) + 1):
-            if str1[index_of_str1 - 1] == str2[index_of_str2 - 1]:
+    for index_of_str1 in range(1, len(temp_str1) + 1):
+        for index_of_str2 in range(1, len(temp_str2) + 1):
+            if temp_str1[index_of_str1 - 1] == temp_str2[index_of_str2 - 1]:
                 matrix[index_of_str1][index_of_str2] = matrix[index_of_str1 - 1][index_of_str2 - 1] + 1
                 if matrix[index_of_str1][index_of_str2] > max_length:
                     max_length = matrix[index_of_str1][index_of_str2]
